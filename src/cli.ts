@@ -10,6 +10,23 @@ const todoList = new TodoListClass("todolist.json")
 const params = process.argv;
 const command = params[2];
 
+// -------------------------------------------------------------------------------------------
+// --- Comando List
+// -------------------------------------------------------------------------------------------
+
+ if (command === "list") {
+    const items = await todoList.getItems()
+    console.log("Lista de itens:")
+    items.forEach((item, index) => {
+        console.log(`${index}: ${item.title}`)
+    })
+ }
+
+
+// -------------------------------------------------------------------------------------------
+// --- Comando add
+// -------------------------------------------------------------------------------------------
+
 if (command === "add") {
     const value = params[3];
     if (!value) {
@@ -34,3 +51,33 @@ if (command === "add") {
     
     
     `)
+
+
+// -------------------------------------------------------------------------------------------
+// --- Comando Remove
+// -------------------------------------------------------------------------------------------
+
+    if (command === "remove") {
+        const indexStr = params[3]
+        if (!indexStr) {
+            console.error("índice do item é obrigatório")
+            process.exit(1)
+        }
+
+        const index = parseInt(indexStr)
+        if (isNaN(index)) {
+            console.error("Índice inválido, precisa ser um número inteiro")
+            process.exit(1)
+
+        }
+
+        await todoList.removeItem(index)
+        console.log(`Item no índice ${index} removido om sucesso`)
+        process.exit(0);
+    }
+
+    
+    
+    
+     
+    
