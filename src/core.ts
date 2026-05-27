@@ -17,7 +17,7 @@ class TodoList {
         await file.write(data)
     }
 
-    private async loadListFromDisk(){
+    private async loadListFromDisk() {
         const file = Bun.file(this.filePath);
         const data = await file.json() as Item[];
         const items = data.map((v: any) => new Item(v.title));
@@ -39,9 +39,20 @@ class TodoList {
         items.splice(index, 1);
         await this.saveListToDisk();
     }
- 
-   async getItems() {
-    const items = await this.items;
+
+    async updateItem(index: number, item: Item) {
+        const items = await this.items;
+        if (index < 0 || index >= items.length) {
+            throw "índice inválido"
+        }
+        const oldItem = items[index];
+        items[index] = item;
+        await this.saveListToDisk();
+        return oldItem
+    }
+
+    async getItems() {
+        const items = await this.items;
         return Array.from(items);
     }
 
