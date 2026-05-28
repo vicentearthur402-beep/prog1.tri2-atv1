@@ -16,10 +16,13 @@ const command = params[2];
 
 if (command === "list") {
     const items = await todoList.getItems()
+    console.log(" ")
     console.log("Lista de itens:")
     items.forEach((item, index) => {
         console.log(`${index}: ${item.title}`)
     })
+    console.log(" ")
+    process.exit(0);
 }
 
 
